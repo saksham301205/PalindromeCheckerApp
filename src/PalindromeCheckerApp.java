@@ -6,15 +6,22 @@ public class PalindromeCheckerApp {
 
         System.out.println("Enter a word:");
         String word = sc.nextLine();
+        word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        String reversed = new StringBuilder(word).reverse().toString();
+        boolean isPalindrome = true;
 
-        if (word.equalsIgnoreCase(reversed)) {
+        for (int i = 0; i < word.length() / 2; i++) {
+            if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
             System.out.println(word + " is a Palindrome");
         } else {
             System.out.println(word + " is not a Palindrome");
         }
-
         sc.close();
     }
 }
