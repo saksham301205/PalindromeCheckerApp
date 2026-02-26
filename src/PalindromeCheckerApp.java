@@ -13,6 +13,12 @@ public class PalindromeCheckerApp {
             System.out.println("Enter a word:");
             String word = sc.nextLine();
 
+            // ✅ Empty check (UC8)
+            if (word.trim().isEmpty()) {
+                System.out.println("Input cannot be empty!");
+                continue;
+            }
+
             if (checkPalindrome(word)) {
                 System.out.println(word + " is a Palindrome");
             } else {
