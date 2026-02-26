@@ -13,7 +13,7 @@ public class PalindromeCheckerApp {
             System.out.println("Enter a word:");
             String word = sc.nextLine();
 
-            // ✅ Empty check (UC8)
+            // UC8 - Empty check
             if (word.trim().isEmpty()) {
                 System.out.println("Input cannot be empty!");
                 continue;
@@ -34,7 +34,10 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
+    // UC4 + UC7
     public static boolean checkPalindrome(String word) {
+
+        // UC4 - Remove special characters & spaces
         word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
         for (int i = 0; i < word.length() / 2; i++) {
