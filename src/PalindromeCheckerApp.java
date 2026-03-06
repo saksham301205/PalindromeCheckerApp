@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
-public class UseCase10PalindromeCheckerApp {
+class PalindromeChecker {
 
-    public static boolean checkPalindrome(String str) {
+    public boolean checkPalindrome(String str) {
+
+        str = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
         int start = 0;
         int end = str.length() - 1;
@@ -19,21 +21,23 @@ public class UseCase10PalindromeCheckerApp {
 
         return true;
     }
+}
+
+public class UseCase11PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         char choice;
 
+        PalindromeChecker checker = new PalindromeChecker();
+
         do {
 
             System.out.print("Enter a word: ");
             String word = sc.nextLine();
 
-            // Normalize string (ignore spaces and case)
-            word = word.replaceAll("\\s+", "").toLowerCase();
-
-            if (checkPalindrome(word)) {
+            if (checker.checkPalindrome(word)) {
                 System.out.println("It is a Palindrome.");
             } else {
                 System.out.println("It is NOT a Palindrome.");
