@@ -2,49 +2,69 @@ import java.util.*;
 
 public class PalindromeCheckerApp {
 
-    public static void main(String[] args) {
+    static class Node {
+        char data;
+        Node next;
 
-        Scanner sc = new Scanner(System.in);
-        char choice;
-
-        do {
-
-            System.out.print("Enter a word: ");
-            String word = sc.nextLine();
-
-            if (checkPalindromeUsingDeque(word)) {
-                System.out.println("It is a Palindrome.");
-            } else {
-                System.out.println("It is NOT a Palindrome.");
-            }
-
-            System.out.print("Do you want to continue? (y/n): ");
-            choice = sc.next().charAt(0);
-            sc.nextLine();
-
-        } while (choice == 'y' || choice == 'Y');
-
-        sc.close();
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
     }
 
-    public static boolean checkPalindromeUsingDeque(String word) {
+    public static Node createLinkedList(String word) {
+
+        Node head = null, tail = null;
+
+        for (char c : word.toCharArray()) {
+            Node newNode = new Node(c);
+
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        return head;
+    }
+
+    public static boolean checkPalindromeUsingLinkedList(String word) {
 
         word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        Node head = createLinkedList(word);
 
-        for (char c : word.toCharArray()) {
-            deque.addLast(c);
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
-        while (deque.size() > 1) {
+        Node prev = null;
+        Node current = slow;
 
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
 
-            if (front != rear) {
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        while (secondHalf != null) {
+
+            if (firstHalf.data != secondHalf.data) {
                 return false;
             }
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         return true;
