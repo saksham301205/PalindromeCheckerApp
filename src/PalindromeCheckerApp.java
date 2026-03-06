@@ -1,72 +1,49 @@
-import java.util.*;
+import java.util.Scanner;
 
-public class PalindromeCheckerApp {
+public class UseCase9PalindromeCheckerApp {
 
-    static class Node {
-        char data;
-        Node next;
+    // Recursive function to check palindrome
+    public static boolean recursivePalindrome(String str, int start, int end) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+        // Base condition
+        if (start >= end) {
+            return true;
         }
+
+        // If characters are not equal
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        // Recursive call
+        return recursivePalindrome(str, start + 1, end - 1);
     }
 
-    public static Node createLinkedList(String word) {
+    public static void main(String[] args) {
 
-        Node head = null, tail = null;
+        Scanner sc = new Scanner(System.in);
+        char choice;
 
-        for (char c : word.toCharArray()) {
-            Node newNode = new Node(c);
+        do {
 
-            if (head == null) {
-                head = tail = newNode;
+            System.out.print("Enter a word: ");
+            String word = sc.nextLine();
+
+            // Remove special characters and convert to lowercase
+            word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+            if (recursivePalindrome(word, 0, word.length() - 1)) {
+                System.out.println("It is a Palindrome.");
             } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        return head;
-    }
-
-    public static boolean checkPalindromeUsingLinkedList(String word) {
-
-        word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        Node head = createLinkedList(word);
-
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node prev = null;
-        Node current = slow;
-
-        while (current != null) {
-            Node next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        while (secondHalf != null) {
-
-            if (firstHalf.data != secondHalf.data) {
-                return false;
+                System.out.println("It is NOT a Palindrome.");
             }
 
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
+            System.out.print("Do you want to continue? (y/n): ");
+            choice = sc.next().charAt(0);
+            sc.nextLine();
 
-        return true;
+        } while (choice == 'y' || choice == 'Y');
+
+        sc.close();
     }
 }
