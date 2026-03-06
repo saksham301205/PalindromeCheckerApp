@@ -1,22 +1,23 @@
 import java.util.Scanner;
 
-public class UseCase9PalindromeCheckerApp {
+public class UseCase10PalindromeCheckerApp {
 
-    // Recursive function to check palindrome
-    public static boolean recursivePalindrome(String str, int start, int end) {
+    public static boolean checkPalindrome(String str) {
 
-        // Base condition
-        if (start >= end) {
-            return true;
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+
+            start++;
+            end--;
         }
 
-        // If characters are not equal
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return recursivePalindrome(str, start + 1, end - 1);
+        return true;
     }
 
     public static void main(String[] args) {
@@ -29,10 +30,10 @@ public class UseCase9PalindromeCheckerApp {
             System.out.print("Enter a word: ");
             String word = sc.nextLine();
 
-            // Remove special characters and convert to lowercase
-            word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+            // Normalize string (ignore spaces and case)
+            word = word.replaceAll("\\s+", "").toLowerCase();
 
-            if (recursivePalindrome(word, 0, word.length() - 1)) {
+            if (checkPalindrome(word)) {
                 System.out.println("It is a Palindrome.");
             } else {
                 System.out.println("It is NOT a Palindrome.");
